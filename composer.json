@@ -1,0 +1,13 @@
+{
+    "name": "zonuexe/oira",
+    "description": "Oira is a simple web framework",
+    "license": "AGPL-3.0-or-later",
+    "require": {
+        "php": "^7.3",
+        "ext-intl": "^7.3",
+        "ext-mbstring": "^7.3"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
