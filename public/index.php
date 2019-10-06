@@ -2,20 +2,23 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-if ($_SERVER['REQUEST_URI'] === '/') {
-    echo "<!DOCTYPE html>\n";
-    echo "<title>test</title>\n";
-    echo "<p>現在は" . h(date('Y年m月d日H時i分s秒')). "です</p>\n";
-    echo "<ul><li><a href='/phpinfo.php'><code>phpinfo()</code></a></ul>\n";
-    echo "<hr>\n";
-    echo "<p><a href='https://github.com/zonuexe/oiraphp'>This code is licensed under AGPL.</a></p>";
-    exit;
+$request_method = $_SERVER['REQUEST_METHOD'];
+$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+$routes = require __DIR__ . '/../app/routes.php';
+
+$map = [];
+foreach ($routes as [$method, $path, $f]) {
+    if (empty($path)) {
+        $map[$path]  = [];
+    }
+
+    $map[$path][$method] = $f;
 }
 
-if ($_SERVER['REQUEST_URI'] === '/phpinfo.php') {
-    phpinfo();
-    exit;
+if (isset($map[$request_uri][$request_method])) {
+    $map[$request_uri][$request_method]();
+} else {
+    http_response_code(404);
+    echo "<p>404 Not Found</p>";
 }
-
-http_response_code(404);
-echo "<p>404 Not Found</p>";
