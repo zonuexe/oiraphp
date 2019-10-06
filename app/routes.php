@@ -11,7 +11,11 @@ $routes = [
     }],
     'phpinfo' => ['GET', '/phpinfo.php', function () {
         phpinfo();
-    }]
+    }],
+    '#404' => function () {
+        http_response_code(404);
+        echo "<p>404 Not Found</p>";
+    },
 ];
 
 return $routes;
