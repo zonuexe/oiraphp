@@ -10,6 +10,7 @@
     },
     "require": {
         "php": "^7.3",
+        "ext-ctype": "^7.3",
         "ext-intl": "^7.3",
         "ext-mbstring": "^7.3"
     },
