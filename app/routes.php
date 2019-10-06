@@ -1,20 +1,19 @@
 <?php
 
+$template = new Oira\TemplateFactory(__DIR__ . '/view/');
+
 $routes = [
-    'index' => ['GET', '/', function () {
-        echo "<!DOCTYPE html>\n";
-        echo "<title>test</title>\n";
-        echo "<p>現在は" . h(date('Y年m月d日H時i分s秒')). "です</p>\n";
-        echo "<ul><li><a href='/phpinfo.php'><code>phpinfo()</code></a></ul>\n";
-        echo "<hr>\n";
-        echo "<p><a href='https://github.com/zonuexe/oiraphp'>This code is licensed under AGPL.</a></p>";
+    'index' => ['GET', '/', function () use ($template) {
+        return [200, [], $template->create('index')];
     }],
     'phpinfo' => ['GET', '/phpinfo.php', function () {
+        ob_start();
         phpinfo();
+
+        return [200, [], ob_get_clean()];
     }],
     '#404' => function () {
-        http_response_code(404);
-        echo "<p>404 Not Found</p>";
+        return [404, [], '<p>404 Not Found</p>'];
     },
 ];
 
