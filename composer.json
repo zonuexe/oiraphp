@@ -3,6 +3,9 @@
     "description": "Oira is a simple web framework",
     "license": "AGPL-3.0-or-later",
     "autoload": {
+        "psr-4": {
+            "Oira\\": "src/"
+        },
         "files": ["src/functions.php"]
     },
     "require": {
